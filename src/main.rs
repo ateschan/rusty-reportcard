@@ -1,4 +1,4 @@
-use serde::{Deserialize};
+use serde::{ Deserialize};
 use serde_json;
 use reqwest;
 use colored::Colorize;
@@ -130,6 +130,7 @@ fn process_assignments(token: &str, course_id: i32) -> Vec<Assignment> {
 
 fn main() -> Result<(), reqwest::Error> {
     env::set_var("RUST_BACKTRACE", "1");
+
 
     let apikey = env::var("API_KEY");
     match &apikey {
