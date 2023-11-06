@@ -1,7 +1,0 @@
-/home/ateschan/Documents/programming/rustyReportcard/target/debug/deps/hyper_tls-12a472e8795d2f46.rmeta: /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-tls-0.5.0/src/lib.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-tls-0.5.0/src/client.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-tls-0.5.0/src/stream.rs
-
-/home/ateschan/Documents/programming/rustyReportcard/target/debug/deps/hyper_tls-12a472e8795d2f46.d: /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-tls-0.5.0/src/lib.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-tls-0.5.0/src/client.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-tls-0.5.0/src/stream.rs
-
-/home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-tls-0.5.0/src/lib.rs:
-/home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-tls-0.5.0/src/client.rs:
-/home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-tls-0.5.0/src/stream.rs:
