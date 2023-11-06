@@ -1,0 +1,11 @@
+/home/ateschan/Documents/programming/rustyReportcard/target/release/deps/linux_raw_sys-1794dd1e5d6866d9.rmeta: /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/lib.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/elf.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/x86_64/errno.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/x86_64/general.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/x86_64/ioctl.rs
+
+/home/ateschan/Documents/programming/rustyReportcard/target/release/deps/liblinux_raw_sys-1794dd1e5d6866d9.rlib: /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/lib.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/elf.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/x86_64/errno.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/x86_64/general.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/x86_64/ioctl.rs
+
+/home/ateschan/Documents/programming/rustyReportcard/target/release/deps/linux_raw_sys-1794dd1e5d6866d9.d: /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/lib.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/elf.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/x86_64/errno.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/x86_64/general.rs /home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/x86_64/ioctl.rs
+
+/home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/lib.rs:
+/home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/elf.rs:
+/home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/x86_64/errno.rs:
+/home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/x86_64/general.rs:
+/home/ateschan/.cargo/registry/src/github.com-1ecc6299db9ec823/linux-raw-sys-0.4.10/src/x86_64/ioctl.rs:
