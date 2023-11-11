@@ -135,7 +135,7 @@ fn main() -> Result<(), reqwest::Error> {
     let apikey = env::var("API_KEY");
     match &apikey {
         Ok(apikey) => {
-            println!("Curretn API key is: >{}<", apikey.hidden());
+            println!("Current API key is: >{}<", apikey.hidden());
 
             // You can use the key in your API requests or other operations here
         }
@@ -251,7 +251,7 @@ fn main() -> Result<(), reqwest::Error> {
                                             );
                                             if let Some(pts) = &submission.pts {
                                                 println!(
-                                                    "Submission Points: {} / {}",
+                                                    "Total: {} / {}",
                                                     pts.to_string().green(),
                                                     assignment.pts
                                                         .unwrap_or_default()
@@ -261,7 +261,7 @@ fn main() -> Result<(), reqwest::Error> {
                                                 println!();
                                             } else {
                                                 println!(
-                                                    "Submission Points: {} / {}",
+                                                    "Total: {} / {}",
                                                     "Not Graded".green(),
                                                     assignment.pts
                                                         .unwrap_or_default()
