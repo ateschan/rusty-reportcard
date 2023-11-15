@@ -1,4 +1,4 @@
-# rustyReportcard
+# rusty-reportcard
 This is a cli tool for canvas.
 
 
