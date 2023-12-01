@@ -7,4 +7,4 @@ todo
 - [ ] custom color menu
 - [ ] add tests for the api key
 - [ ] proper error checking
-- [ ] improve readability, make code self documenting.
+- [ ] improve readability :)
