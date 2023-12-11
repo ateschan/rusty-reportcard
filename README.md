@@ -1,5 +1,3 @@
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url = https://github.com/ateschan/rusty-reportcard)
-
 # rusty-reportcard
 This is a cli tool for canvas.
 
