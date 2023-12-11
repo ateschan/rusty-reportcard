@@ -2,7 +2,7 @@
 This is a cli tool for canvas.
 
 
-## usage
+## Usage
 
 ### Setting up API Key
 
