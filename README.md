@@ -27,21 +27,18 @@ setx API_KEY="{pasteapikeyhere}"
 export API_KEY="{pasteapikeyhere}"
 ```
 
+### Installing
+Click [here](https://github.com/ateschan/rusty-reportcard/releases) and download latest release.
 
-
-### Installing (linux)
-- click [here](https://github.com/ateschan/rusty-reportcard/releases) and download latest release.
-
-### compiling from source
+### Compiling from source
+Make sure you have rust installed
 ```
-yay -S rustup
 git clone https://github.com/ateschan/rusty-reportcard
 cd rusty-reportcard
 cargo run
-
 ```
 
-todo 
+Todo 
 - [ ] add cli functionality to print out only certain <ul>classes</ul>
 - [ ] custom color menu
 - [ ] add tests for the api key
