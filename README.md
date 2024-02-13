@@ -40,10 +40,3 @@ git clone https://github.com/ateschan/rusty-reportcard
 cd rusty-reportcard
 cargo run
 ```
-
-Todo 
-- [ ] add cli functionality to print out only certain <ul>classes</ul>
-- [ ] custom color menu
-- [ ] add tests for the api key
-- [ ] proper error checking
-- [ ] improve readability :)
