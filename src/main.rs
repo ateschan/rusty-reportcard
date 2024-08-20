@@ -1,8 +1,12 @@
-use serde::{Deserialize};
-use serde_json;
-use reqwest;
+use crate::error::Result;
 use colored::Colorize;
+use res_mgr::ResManager;
+use serde::Deserialize;
 use std::env;
+
+mod config;
+mod error;
+mod res_mgr;
 
 #[derive(Debug, Deserialize)]
 struct User {
@@ -18,13 +22,10 @@ struct User {
 struct Course {
     #[serde(rename = "course_id")]
     id: i32,
-
     #[serde(rename = "created_at")]
     date: String,
-
     #[serde(rename = "grades")]
     grades: Grades,
-
     course_name: Option<String>,
     assignments: Option<Vec<Assignment>>,
 }
@@ -66,28 +67,33 @@ struct Submission {
     pts: Option<f32>,
 }
 
-fn get_data(token: &str, url: &str) -> Result<String, reqwest::Error> {
-    let client = reqwest::blocking::Client::new();
-    let response = client
-        .get(url)
-        .header("Authorization", format!("Bearer {}", token))
-        .send()?;
-    Ok(response.text()?)
+async fn get_data<T>(res_mgr: &ResManager, url: &str) -> Result<T>
+where
+    T: serde::de::DeserializeOwned, {
+    let client = res_mgr.store();
+    let response = client.get(url).send().await?;
+    let data = response.json::<T>().await?;
+    Ok(data)
+}
+async fn get_user(res_mgr: &ResManager) -> Result<User> {
+    let user_data = get_data::<User>(
+        res_mgr,
+        "https://alamo.instructure.com/api/v1/users/self/profile",
+    )
+    .await?;
+    Ok(user_data)
 }
 
-fn get_user(token: &str) -> Result<User, reqwest::Error> {
-    let user_data = get_data(token, "https://alamo.instructure.com/api/v1/users/self/profile")?;
-    let user: User = serde_json::from_str(&user_data).expect("Failed to parse user data");
-    Ok(user)
+async fn find_name(res_mgr: &ResManager, course_id: i32) -> Result<String> {
+    let course_data = get_data::<CourseInfo>(
+        res_mgr,
+        &format!("https://alamo.instructure.com/api/v1/courses/{}", course_id),
+    )
+    .await?;
+    Ok(course_data.name)
 }
 
-fn find_name(token: &str, course_id: i32) -> Result<String, reqwest::Error> {
-    let course_data = get_data(token, &format!("https://alamo.instructure.com/api/v1/courses/{}", course_id))?;
-    let course: CourseInfo = serde_json::from_str(&course_data).expect("Failed to parse course data");
-    Ok(course.name)
-}
-
-fn process_assignments(token: &str, course_id: i32) -> Result<Vec<Assignment>, reqwest::Error> {
+async fn process_assignments(res_mgr: &ResManager, course_id: i32) -> Result<Vec<Assignment>> {
     let mut assignments = Vec::new();
     let mut page_number = 1;
 
@@ -97,9 +103,7 @@ fn process_assignments(token: &str, course_id: i32) -> Result<Vec<Assignment>, r
             course_id, page_number
         );
 
-        let body = get_data(token, &url)?;
-        let mut page_assignments: Vec<Assignment> = serde_json::from_str(&body).expect("Failed to parse assignments");
-
+        let mut page_assignments = get_data::<Vec<Assignment>>(res_mgr, &url).await?;
         if page_assignments.is_empty() {
             break;
         }
@@ -111,27 +115,12 @@ fn process_assignments(token: &str, course_id: i32) -> Result<Vec<Assignment>, r
     Ok(assignments)
 }
 
-fn main() -> Result<(), reqwest::Error> {
+#[tokio::main]
+async fn main() -> Result<()> {
     env::set_var("RUST_BACKTRACE", "1");
+    let res_mgr = ResManager::new().await?;
 
-    let apikey = match env::var("API_KEY") {
-        Ok(key) => key,
-        Err(_) => {
-            eprintln!(
-                "Set an env API Key:
-                1. Go to https://alamo.instructure.com/profile/settings
-                2. Click on the API Access Tokens tab
-                3. Click New Access Token
-                4. Enter a name for the token and click Generate Token
-                5. Copy the token and create an environment variable named API_KEY with the token as the value 
-                \n WINDOWS: open cmd and paste set API_KEY=your_api_key_here 
-                \n LINUX: open terminal and paste export API_KEY=\"your_api_key_here\""
-            );
-            return Ok(());
-        }
-    };
-
-    let user = get_user(&apikey)?;
+    let user = get_user(&res_mgr).await?;
     let userid = user.id.to_string();
 
     println!(
@@ -140,15 +129,17 @@ fn main() -> Result<(), reqwest::Error> {
         user.name.yellow().bold()
     );
 
-    let course_data = get_data(
-        &apikey,
-        &format!("https://alamo.instructure.com/api/v1/users/{}/enrollments", userid),
-    )?;
-    
-    let mut courses: Vec<Course> = serde_json::from_str(&course_data).expect("Failed to parse course data");
+    let mut courses = get_data::<Vec<Course>>(
+        &res_mgr,
+        &format!(
+            "https://alamo.instructure.com/api/v1/users/{}/enrollments",
+            userid
+        ),
+    )
+    .await?;
 
     for course in courses.iter_mut() {
-        course.course_name = Some(find_name(&apikey, course.id)?);
+        course.course_name = Some(find_name(&res_mgr, course.id).await?);
 
         let letter_grade = match course.grades.number_grade {
             Some(grade) if grade >= 90.0 => "A",
@@ -162,21 +153,30 @@ fn main() -> Result<(), reqwest::Error> {
         println!(
             "ID: {}, Course: {}, Started: {}, Grade: {}, Overall Score: {}",
             course.id.to_string().red().bold(),
-            course.course_name.as_ref().unwrap().red().bold().underline(),
+            course
+                .course_name
+                .as_ref()
+                .unwrap()
+                .red()
+                .bold()
+                .underline(),
             &course.date[..10].red().bold(),
             letter_grade.red().bold(),
-            course.grades.number_grade.unwrap_or_default().to_string().red().bold()
+            course
+                .grades
+                .number_grade
+                .unwrap_or_default()
+                .to_string()
+                .red()
+                .bold()
         );
 
-        let assignments = process_assignments(&apikey, course.id)?;
+        let assignments = process_assignments(&res_mgr, course.id).await?;
         course.assignments = Some(assignments);
 
         if let Some(assignments) = &course.assignments {
             for assignment in assignments.iter() {
-                print!(
-                    "{} ",
-                    assignment.name.cyan().bold()
-                );
+                print!("{} ", assignment.name.cyan().bold());
 
                 if let Some(due) = &assignment.due {
                     println!("Due date: {}", &due[..10].blue());
@@ -184,17 +184,15 @@ fn main() -> Result<(), reqwest::Error> {
                     println!("Due date: {}", "No Due Date".blue().clear());
                 }
 
-                let submission_data = get_data(
-                    &apikey,
+                let submission = get_data::<Submission>(
+                    &res_mgr,
                     &format!(
                         "https://alamo.instructure.com/api/v1/courses/{}/assignments/{}/submissions/{}",
                         course.id,
                         assignment.id,
                         userid
                     ),
-                )?;
-                let submission: Submission = serde_json::from_str(&submission_data).expect("Failed to parse submission data");
-                
+                ).await?;
                 if let Some(submission_pts) = submission.pts {
                     println!(
                         "ID: {} Total: {} / {}",
