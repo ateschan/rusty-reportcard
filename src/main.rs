@@ -72,7 +72,6 @@ where
     T: serde::de::DeserializeOwned, {
     let client = res_mgr.store();
     let response = client.get(url).send().await?;
-    println!("{:?}", response);
     let data = response.json::<T>().await?;
     Ok(data)
 }
