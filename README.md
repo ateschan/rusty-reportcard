@@ -36,7 +36,7 @@ Click [here](https://github.com/ateschan/rusty-reportcard/releases) and download
 ### Compiling from source
 Make sure you have rust installed
 ```
-git clone https://github.com/ateschan/rusty-reportcard
+git clone git@github.com:ateschan/rusty-reportcard.git
 cd rusty-reportcard
 cargo run
 ```
