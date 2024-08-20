@@ -78,7 +78,7 @@ where
 }
 async fn get_user(res_mgr: &ResManager) -> Result<User> {
     let user_data = get_data::<User>(
-        &res_mgr,
+        res_mgr,
         "https://alamo.instructure.com/api/v1/users/self/profile",
     )
     .await?;
@@ -87,7 +87,7 @@ async fn get_user(res_mgr: &ResManager) -> Result<User> {
 
 async fn find_name(res_mgr: &ResManager, course_id: i32) -> Result<String> {
     let course_data = get_data::<CourseInfo>(
-        &res_mgr,
+        res_mgr,
         &format!("https://alamo.instructure.com/api/v1/courses/{}", course_id),
     )
     .await?;
@@ -104,7 +104,7 @@ async fn process_assignments(res_mgr: &ResManager, course_id: i32) -> Result<Vec
             course_id, page_number
         );
 
-        let mut page_assignments = get_data::<Vec<Assignment>>(&res_mgr, &url).await?;
+        let mut page_assignments = get_data::<Vec<Assignment>>(res_mgr, &url).await?;
         if page_assignments.is_empty() {
             break;
         }
