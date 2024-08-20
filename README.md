@@ -21,13 +21,13 @@ This is a cli tool for canvas.
 
 #### Windows
 ```
-setx API_KEY={pasteapikeyhere}
+setx API_KEY="Bearer pasteapikeyhere"
 ```
 
 
 #### Mac/Linux
 ```
-export API_KEY={pasteapikeyhere}
+export API_KEY="Bearer pasteapikeyhere"
 ```
 
 ### Installing
