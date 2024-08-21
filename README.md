@@ -1,12 +1,5 @@
 # rusty-reportcard [![Rust](https://github.com/ateschan/rusty-reportcard/actions/workflows/rust.yml/badge.svg)](https://github.com/ateschan/rusty-reportcard/actions/workflows/rust.yml)
 
-<p align="center">
-
-  [![Watch the video](  https://github.com/user-attachments/assets/67665abf-05dd-4ebb-a845-d84001ce8966)](  https://github.com/user-attachments/assets/67665abf-05dd-4ebb-a845-d84001ce8966)
-</p>
-
-
-
 This is a cli tool for alamo colleges canvas.
 
 
